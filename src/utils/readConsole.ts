@@ -12,9 +12,9 @@ export async function readConsole(message: string) {
   return mensagem
 }
 
-export async function checkboxConsole(mensagem: string, numOptions: number, options: Array<string>) {
+export async function checkboxConsole(mensagem: string, options: Array<string>) {
   let choicesArray:object[] = []
-  for(let i = 0; i < numOptions; i++) {
+  for(let i = 0; i < choicesArray.length; i++) {
     choicesArray.push({ name: options[i]})
   }
 
@@ -30,18 +30,15 @@ export async function checkboxConsole(mensagem: string, numOptions: number, opti
   console.log(rs)
 }
 
-export async function listConsole(mensagem: string, numOptions: number, options: Array<string>) {
-  let choicesArray:object[] = []
-  for(let i = 0; i < numOptions; i++) {
-    choicesArray.push({ name: options[i]})
-  }
-
+export async function listConsole(mensagem: string, options: Array<string>, pageSize: number) {
   const rs = await inquirer.prompt([
     {
       type: "list",
       name: "choice",
       message: mensagem,
-      choices: choicesArray
+      pageSize,
+      loop: false,
+      choices: options
     }
   ])
 

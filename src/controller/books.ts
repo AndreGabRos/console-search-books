@@ -3,17 +3,20 @@ import axios from "axios"
 const API_GOOGLE_BOOKS = "https://www.googleapis.com/books/v1/volumes"
 
 export async function searchBooksByTitle(title: string) {
-  const titleParam = "intitle:" + title
-  
-  const response = await axios.get(API_GOOGLE_BOOKS, {
-    params: {
-      q: titleParam,
-      maxResults: 10,
-    }
-  })
+  try {
+    const titleParam = "intitle:" + title
+    
+    const response = await axios.get(API_GOOGLE_BOOKS, {
+      params: {
+        q: titleParam,
+        maxResults: 10,
+      }
+    })
 
-  const books = response.data
-  return books
+    return response.data
+  } catch(err) {
+    console.log("Não foi possível realizar a busca, tente novamente.")
+  }
 }
 
 export async function searchBooksByAuthor(author: string) {
@@ -27,5 +30,16 @@ export async function searchBooksByAuthor(author: string) {
   })
 
   const books = response.data
+  return books
+}
+
+
+export async function getManyBooksById(booksId: Array<string>) {
+  let books: object[] = []
+  for (let i in booksId) {
+    const book = await axios.get(API_GOOGLE_BOOKS + "/" + booksId[i])
+    books.push(book.data)
+  }
+
   return books
 }
