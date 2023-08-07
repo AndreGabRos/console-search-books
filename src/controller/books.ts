@@ -33,12 +33,18 @@ export async function searchBooksByAuthor(author: string) {
   return books
 }
 
+export async function getBookById(bookId: string) {
+  const book = await axios.get(API_GOOGLE_BOOKS + "/" + bookId)
+
+  return book.data
+}
+
 
 export async function getManyBooksById(booksId: Array<string>) {
   let books: object[] = []
   for (let i in booksId) {
-    const book = await axios.get(API_GOOGLE_BOOKS + "/" + booksId[i])
-    books.push(book.data)
+    const book = await getBookById(booksId[i])
+    books.push(book)
   }
 
   return books

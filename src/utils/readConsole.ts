@@ -37,7 +37,6 @@ export async function listConsole(mensagem: string, options: Array<string>, page
       name: "choice",
       message: mensagem,
       pageSize,
-      loop: false,
       choices: options
     }
   ])
