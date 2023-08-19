@@ -5,11 +5,14 @@ import { addBookToCollection } from "../controller/biblioteca"
 
 
 export async function searchBook() {
+	let bookTitle = ""
+	let pesquisar = true
   let nestaTela = true
+	let pagina = 1
   while (nestaTela == true) {
-    const bookTitle = await readConsole("Nome do livro: ")
+		bookTitle = pesquisar == true ? await readConsole("Nome do Livro: ") : bookTitle
 
-    const books = await searchBooksByTitle(bookTitle)
+    const books = await searchBooksByTitle(bookTitle, pagina)
     const booksInfo = books.items.map((data) => ({
       title: data.volumeInfo.title,
       authors: data.volumeInfo.authors,
@@ -21,6 +24,10 @@ export async function searchBook() {
     }
     
     let choices = booksList
+		choices.push("Próxima página")
+		if (pagina != 1) {
+			choices.push("Voltar página")
+		}
     choices.push("Pesquisar novamente")
     choices.push("Voltar à tela principal")
 
@@ -38,8 +45,15 @@ export async function searchBook() {
         nestaTela = false
       }
     } else if(numberChoice == 10) {
+			pagina += 1
+			pesquisar = false
+		} else if(choice.choice == "Voltar página") {
+			pagina -= 1
+			pesquisar = false
+		} else if(choice.choice = "Pesquisar novamente") {
+			pesquisar = true
       null
-    } else if(numberChoice == 11) {
+    } else if(choice.choice == "Voltar à tela principal") {
       nestaTela = false
     }
   }

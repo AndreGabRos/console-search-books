@@ -2,7 +2,7 @@
   "name": "console-search-books",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
+  "description": "Aplicativo de console feito em node que utiliza da API GOOGLE BOOKS para buscar livros.",
   "main": "index.js",
   "scripts": {
     "dev": "tsx ./src/index.ts"

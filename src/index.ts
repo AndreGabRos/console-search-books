@@ -4,6 +4,7 @@ import { viewLibrary } from "./view/biblioteca"
 import { searchBook, searchBooksByAuthorView } from "./view/searchBook"
 import { collections } from "./view/collections"
 
+
 let quit = false
 let choice = { choice: ""}
 const choices = ["Pesquisar livros", "Pesquisar livro pelo autor", "Biblioteca", "Coleções", "Sair"]

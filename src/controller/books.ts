@@ -2,7 +2,7 @@ import axios from "axios"
 
 const API_GOOGLE_BOOKS = "https://www.googleapis.com/books/v1/volumes"
 
-export async function searchBooksByTitle(title: string) {
+export async function searchBooksByTitle(title: string, pagina: number) {
   try {
     const titleParam = "intitle:" + title
     
@@ -10,6 +10,7 @@ export async function searchBooksByTitle(title: string) {
       params: {
         q: titleParam,
         maxResults: 10,
+				startIndex: 10*(pagina-1)
       }
     })
 
