@@ -20,13 +20,14 @@ export async function searchBooksByTitle(title: string, pagina: number) {
   }
 }
 
-export async function searchBooksByAuthor(author: string) {
+export async function searchBooksByAuthor(author: string, pagina: number) {
   const authorParam = "inauthor:"+author
 
   const response = await axios.get(API_GOOGLE_BOOKS, {
     params: {
       q: authorParam,
       maxResults: 10,
+			startIndex: (pagina-1)*10
     }
   })
 

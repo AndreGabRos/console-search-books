@@ -25,7 +25,7 @@ export async function searchBook() {
     
     let choices = booksList
 		choices.push("Próxima página")
-		if (pagina != 1) {
+		if (pagina > 1) {
 			choices.push("Voltar página")
 		}
     choices.push("Pesquisar novamente")
@@ -63,10 +63,13 @@ export async function searchBook() {
 
 export async function searchBooksByAuthorView() {
   let nestaTela = true
+	let pesquisar = true
+	let bookAuthor = ""
+	let pagina = 1
   while (nestaTela == true) {
-    const bookAuthor = await readConsole("Nome do autor: ")
+		bookAuthor = pesquisar == true ? await readConsole("Nome do autor: ") : bookAuthor
 
-    const books = await searchBooksByAuthor(bookAuthor)
+    const books = await searchBooksByAuthor(bookAuthor, pagina)
     const booksInfo = books.items.map((data) => ({
       title: data.volumeInfo.title,
       authors: data.volumeInfo.authors,
@@ -78,6 +81,10 @@ export async function searchBooksByAuthorView() {
     }
     
     let choices = booksList
+		choices.push("Próxima página")
+		if (pagina > 1) {
+			choices.push("Página anterior")
+		}	
     choices.push("Pesquisar novamente")
     choices.push("Voltar à tela principal")
 
@@ -94,11 +101,16 @@ export async function searchBooksByAuthorView() {
       } else if (ch == 1) {
         nestaTela = false
       }
-    } else if(numberChoice == 10) {
-      null
-    } else if(numberChoice == 11) {
-      nestaTela = false
-    }
+    } else if(choice.choice == "Próxima página") {
+			pagina += 1
+			pesquisar = false
+    } else if(choice.choice == "Página anterior") {
+			pagina -= 1
+    } else if(choice.choice == "Pesquisar novamente") {
+			pesquisar = true
+		} else if(choice.choice == "Voltar à tela principal") {
+			nestaTela = false
+		}
   }
 }
 
